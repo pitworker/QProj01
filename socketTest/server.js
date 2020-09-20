@@ -1,8 +1,8 @@
-const port = 1337;
-const io = require('socket.io')();
+const PORT = 51367;
+const IO = require('socket.io')();
 
 let plant = null;
-const clients = [];
+let clients = [];
 
 function generateLeaf() {
     return [
@@ -13,6 +13,7 @@ function generateLeaf() {
 }
 
 function reset() {
+    console.log('board reset');
     plant = {
         leaves: [],
         shade: 1
@@ -25,10 +26,12 @@ function reset() {
     clients = [];
 }
 
-io.on('connection', function (socket) {
+IO.on('connection', function (socket) {
     clients.push(socket);
     socket.emit('plant', JSON.stringify(plant));
-    io.emit('message', 'new client');
+    IO.emit('message', 'new client');
+
+    console.log('new client connected: ' + socket);
 
     socket.on('disconnect', function () {
         let i = clients.indexOf(socket);
@@ -44,18 +47,20 @@ io.on('connection', function (socket) {
     socket.on('note', function (noteJSON) {
         let note = JSON.parse(noteJSON);
 
+        console.log('received note: ' + note + '\nfrom ' + socket);
+
         for (let i in clients) {
             if (clients[i] != socket) {
                 clients[i].emit('note', JSON.stringify(note.content));
             }
         }
 
-        growPlant(note.score);
+        //growPlant(note.score);
 
-        io.emit('plant', JSON.stringify(plant));
+        IO.emit('plant', JSON.stringify(plant));
     });
-}
+});
 
 reset();
-io.listen(port);
-console.log('Listening on port ' + port + '...');
+IO.listen(PORT);
+console.log('Listening on port ' + PORT + '...');

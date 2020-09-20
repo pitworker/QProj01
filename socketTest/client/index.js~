@@ -1,0 +1,14 @@
+const CONTINUOUS = true;
+const INTERIM_RESULTS = false;
+
+let speechRec;
+let plant;
+
+function setup() {
+    createCanvas(windowWidth, windowHeight);
+
+    let speech = new p5.Speech();
+    speechRec = new p5.speechRec(gotSpeech);
+    speechRec.start(CONTINUOUS,INTERIM_RESULTS);
+
+}

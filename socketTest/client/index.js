@@ -1,3 +1,5 @@
+//TODO: move client from websocket to socket.io,
+//      or move server from socket.io to websocket
 //const SOCKET = IO();
 
 const CONTINUOUS = true;

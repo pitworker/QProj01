@@ -1,21 +1,23 @@
-// Only executed our code once the DOM is ready.
-window.onload = function() {
-    // Get a reference to the canvas object
-    var canvas = document.getElementById('myCanvas');
-    // Create an empty project and a view for the canvas:
-    paper.setup(canvas);
-    // Create a rectangle shaped path with its top left point at
-    // {x: 75, y: 75} and a size of {width: 75, height: 75}
-    var path = new paper.Path.Rectangle({
-        point: [75, 75],
-        size: [75, 75],
-        strokeColor: 'black'
-    });
+const CONTINUOUS = true;
+const INTERIM_RESULTS = false;
 
-    paper.view.onFrame = function(event) {
-        // Each frame, rotate the path by 3 degrees:
-        path.rotate(3);
-    }
+let speechRec;
 
-    paper.view.draw();
+// FUNCTIONS CALLED IN SETUP AND DRAW GO HERE
+function gotSpeech(speech) {
+    let phrase = speech.text.toLowerCase();
+
+    //console.log is the same thing as print
+    console.log('GOT SPEECH: ' + phrase);
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+
+  let speech = new p5.Speech();
+  speechRec = new p5.SpeechRec(gotSpeech);
+  speechRec.start(CONTINUOUS, INTERIM_RESULTS);
+}
+
+function draw() {
 }

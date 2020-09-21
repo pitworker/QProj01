@@ -1,7 +1,0 @@
-const port = 1337;
-const io = require('socket.io')();
-
-
-reset();
-io.listen(port);
-console.log('Listening on port ' + port +

@@ -63,7 +63,7 @@ function setup() {
 
 function draw() {
     if (signedIn) {
-        background(255,20,0);
+        background(255,120,0);
         drawPlant();
     }
 }
@@ -92,7 +92,7 @@ socket.on('nameSet', function (data) {
 });
 
 socket.on('plant', function (data) {
-    plant = JSON.parse(plantJSON);
+    plant = JSON.parse(data);
     console.log('new plant data received');
 });
 

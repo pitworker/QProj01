@@ -42,14 +42,15 @@ io.on('connection', function (socket) {
 
     socket.on('setName', function (data) {
         if (names.indexOf(data) > -1) {
+            socket.emit('nameExists', data +
+                        ' already exists! Pick another name!');
+        } else {
             names.push(data);
 
             socket.emit('nameSet', data);
-            console.log(socket + ' set name to ' + name);
+            console.log(socket + ' set name to ' + data);
             socket.emit('plant', JSON.stringify(plant));
-            io.emit('newClient', name);
-        } else {
-            socket.emit('nameExists', data + ' already exists! Pick another name!');
+            io.emit('newClient', data);
         }
     });
 

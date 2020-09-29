@@ -13,6 +13,8 @@ let name;
 
 let plant;
 
+let angleMult;
+
 function initializePlant() {
     createCanvas(windowWidth, windowHeight);
 
@@ -36,11 +38,41 @@ function gotSpeech(speech) {
     //TODO: distinguish different phrases by key commands
     //SEND NOTE, WATER PLANT, LIGHT ON, LIGHT OFF
 
-    socket.emit('note', JSON.stringify({'name': name, 'content': phrase}));
+    if (phrase.toLowerCase() == 'new plant') {
+        socket.emit('newPlant', JSON.stringify({'name': name}));
+    } else {
+        socket.emit('note', JSON.stringify({'name': name, 'content': phrase}));
+    }
+}
+
+function drawLeaf(r) {
+    noStroke();
+    fill(100,0,255);
+    circle(0, 0, r * 0.75);
+}
+
+function drawBranch(b) {
+    if (b != null) {
+        push();
+
+        rotate(b.angle * angleMult);
+        strokeWeight(b.length / 2);
+        line(0, 0, 0, -b.length);
+        translate(0, -b.length);
+
+        if (b.isLeaf) {
+            drawLeaf(b.length);
+        } else {
+            drawTree(b.left);
+            drawTree(b.right);
+        }
+
+        pop();
+    }
 }
 
 function drawPlant() {
-    //TODO: make this draw a plant
+    drawBranch(plant);
 }
 
 function setup() {
@@ -63,7 +95,14 @@ function setup() {
 
 function draw() {
     if (signedIn) {
-        background(255,120,0);
+        background(255,204,0);
+
+        angleMult = (mouseX / width);
+
+        translate(width/2, height);
+
+        stroke(255);
+
         drawPlant();
     }
 }

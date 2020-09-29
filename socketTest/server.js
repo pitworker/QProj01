@@ -1,4 +1,10 @@
 const PORT = 51367;
+const HEIGHT_MULT = 0.7;
+const PROB_MULT = 0.9;
+const THETA = Math.PI * 0.25;
+const INITIAL_HEIGHT = 120;
+const INITIAL_ANGLE = 0;
+const INITIAL_PROB = 1;
 
 let app = require('express')();
 let http = require('http').Server(app);
@@ -16,16 +22,35 @@ function generateLeaf() {
     ];
 }
 
-function reset() {
-    console.log('board reset');
-    plant = {
-        leaves: [],
-        shade: 1
+function branch(a,h,p) {
+    let n = {
+        angle:  a,
+        length: h,
+        right:  null,
+        left:   null,
+        isLeaf: true
+    };
+
+    if (Math.random() < p) {
+        n.right = branch(a + THETA,
+                         h * HEIGHT_MULT,
+                         p * PROB_MULT);
+        n.isLeaf = false;
     }
 
-    for (let i = 0; i < 5; i++) {
-        plant.leaves.push(generateLeaf());
+    if (Math.random() < p) {
+        n.left = branch(a - THETA,
+                        h * HEIGHT_MULT,
+                        p * PROB_MULT);
+        n.isLeaf = false;
     }
+
+    return n;
+}
+
+function reset() {
+    console.log('board reset');
+    plant = branch(INITIAL_ANGLE, INITIAL_HEIGHT, INITIAL_PROB);
 
     names = [];
     clients = [];
@@ -69,7 +94,7 @@ io.on('connection', function (socket) {
     socket.on('note', function (noteJSON) {
         let note = JSON.parse(noteJSON);
 
-        console.log('received note: ' + note.content + '\nfrom ' + note.sender);
+        console.log('received note: ' + note.content + '\nfrom ' + note.name);
 
         for (let i in clients) {
             if (clients[i] != socket) {
@@ -78,6 +103,16 @@ io.on('connection', function (socket) {
         }
 
         //growPlant(note.score);
+
+        io.emit('plant', JSON.stringify(plant));
+    });
+
+    socket.on('newPlant', function (nameJSON) {
+        let sender = JSON.parse(nameJSON);
+
+        console.log('received command: newPlant\nfrom ' + sender.name);
+
+        plant = branch(INITIAL_ANGLE, INITIAL_HEIGHT, INITIAL_PROB);
 
         io.emit('plant', JSON.stringify(plant));
     });

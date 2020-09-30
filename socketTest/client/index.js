@@ -63,8 +63,8 @@ function drawBranch(b) {
         if (b.isLeaf) {
             drawLeaf(b.length);
         } else {
-            drawTree(b.left);
-            drawTree(b.right);
+            drawBranch(b.left);
+            drawBranch(b.right);
         }
 
         pop();

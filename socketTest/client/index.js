@@ -111,7 +111,7 @@ function draw() {
     if (signedIn) {
         background(255,204,0);
 
-        let plantFlowVal = plantFlow((frameForward ! frameCount :
+        let plantFlowVal = plantFlow((frameForward ? frameCount :
                                       FRAME_LIMIT - frameCount) / FRAME_LIMIT);
 
         angleAdd = (2.0 * (plantFlowVal - 0.5))

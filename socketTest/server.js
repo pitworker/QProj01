@@ -1,7 +1,7 @@
 const PORT = 51367;
 const HEIGHT_MULT = 0.7;
 const PROB_MULT = 0.9;
-const THETA = Math.PI * 0.25;
+const THETA = Math.PI * 0.125;
 const INITIAL_HEIGHT = 120;
 const INITIAL_ANGLE = 0;
 const INITIAL_PROB = 1;

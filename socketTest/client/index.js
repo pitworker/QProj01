@@ -3,6 +3,8 @@ const INTERIM_RESULTS = false;
 
 const PLANT_BASE = 200;
 
+const FRAME_LIMIT = 300;
+
 let socket = io();
 
 let speechRec;
@@ -14,6 +16,9 @@ let name;
 let plant;
 
 let angleMult;
+let angleAdd;
+
+let frameCount;
 
 function initializePlant() {
     createCanvas(windowWidth, windowHeight);
@@ -24,6 +29,8 @@ function initializePlant() {
 
     signedIn = true;
     console.log('plant initialized');
+
+    frameCount = 0;
 }
 
 function setName() {
@@ -55,7 +62,7 @@ function drawBranch(b) {
     if (b != null) {
         push();
 
-        rotate(b.angle * angleMult);
+        rotate(b.angle + angleAdd);
         strokeWeight(b.length / 2);
         line(0, 0, 0, -b.length);
         translate(0, -b.length);
@@ -73,6 +80,11 @@ function drawBranch(b) {
 
 function drawPlant() {
     drawBranch(plant);
+}
+
+function plantFlow(t) {
+    // Using Penner's EaseOut Sine function from Golan Levin's Pattern Master
+    return Math.sin(t * (Math.PI * 0.5));
 }
 
 function setup() {
@@ -97,6 +109,9 @@ function draw() {
     if (signedIn) {
         background(255,204,0);
 
+        angleAdd = (2.0 * (plantFlow(frameCount / FRAME_LIMIT) - 0.5))
+                   * (Math.PI * 0.125);
+
         angleMult = (mouseX / width);
 
         translate(width/2, height);
@@ -104,6 +119,8 @@ function draw() {
         stroke(255);
 
         drawPlant();
+
+        frameCount = (frameCount + 1) % FRAME_LIMIT;
     }
 }
 

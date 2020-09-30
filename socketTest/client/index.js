@@ -19,6 +19,7 @@ let angleMult;
 let angleAdd;
 
 let frameCount;
+let frameForward;
 
 function initializePlant() {
     createCanvas(windowWidth, windowHeight);
@@ -31,6 +32,7 @@ function initializePlant() {
     console.log('plant initialized');
 
     frameCount = 0;
+    frameForward = true;
 }
 
 function setName() {
@@ -109,7 +111,10 @@ function draw() {
     if (signedIn) {
         background(255,204,0);
 
-        angleAdd = (2.0 * (plantFlow(frameCount / FRAME_LIMIT) - 0.5))
+        let plantFlowVal = plantFlow((frameForward ! frameCount :
+                                      FRAME_LIMIT - frameCount) / FRAME_LIMIT);
+
+        angleAdd = (2.0 * (plantFlowVal - 0.5))
                    * (Math.PI * 0.125);
 
         angleMult = (mouseX / width);
@@ -120,7 +125,11 @@ function draw() {
 
         drawPlant();
 
-        frameCount = (frameCount + 1) % FRAME_LIMIT;
+        frameCount++;
+        if (frameCount >= FRAME_LIMIT) {
+            frameCount = 0;
+            frameForward = !frameForward;
+        }
     }
 }
 

@@ -112,7 +112,8 @@ function draw() {
         background(255,204,0);
 
         let plantFlowVal = plantFlow((frameForward ? frameCount :
-                                      FRAME_LIMIT - frameCount) / FRAME_LIMIT);
+                                      (FRAME_LIMIT - frameCount))
+                                     / FRAME_LIMIT);
 
         angleAdd = (2.0 * (plantFlowVal - 0.5))
                    * (Math.PI * 0.125);

@@ -11,15 +11,44 @@ let http = require('http').Server(app);
 let io = require('socket.io')(http);
 
 let plant = null;
+let ornaments = [];
 let clients = [];
 let names = [];
 
-function generateLeaf() {
-    return [
-        Math.random() * 300,
-        Math.random() * 600,
-        Math.random() * 600
-    ];
+function generateEmoji() {
+    let unicodeIndex = Math.floor(Math.random() * 0xFD) + 0x1F400;
+    return '\u' + unicodeIndex.toString(16);
+}
+
+function placeOnBranch() {
+    let point = [null,null];
+
+    let r0 = Math.random();
+    let r1 = Math.random();
+
+    point[0] = (1 - Math.sqrt(r0)) * plant.a[0]
+        + (Math.sqrt(r0) * (1 - r1)) * plant.b[0]
+        + (Math.sqrt(r0) * r1) * plant.c[0];
+    point[1] = (1 - Math.sqrt(r0)) * plant.a[1]
+        + (Math.sqrt(r0) * (1 - r1)) * plant.b[1]
+        + (Math.sqrt(r0) * r1) * plant.c[1];
+
+    return point;
+}
+
+function generateOrnament(message,sender) {
+    let ornament = {};
+
+    ornament.symbol = generateEmoji();
+    ornament.position = placeOnBranch();
+    ornament.message = message;
+    ornament.sender = sender;
+
+    console.log(sender + '\'s message: ' + ornament.message
+                + '\nencoded placed at: ' + ornament.position
+                + '\nwith emoji: ' + ornament.symbol);
+
+    return ornament;
 }
 
 function branch(a,h,p) {
@@ -48,9 +77,24 @@ function branch(a,h,p) {
     return n;
 }
 
+function generatePlant() {
+    let bottomOffset = Math.random() * 150;
+
+    let newPlant {
+        a: [0, Math.random() * 300 + 120],
+        b: [-bottomOffset, 120],
+        c: [bottomOffset, 120],
+        stump: [Math.random() * bottomOffset, 120]
+        leafColor: [0, 51, 0],
+        stumpColor: [102, 51, 0]
+    };
+
+    return newPlant;
+}
+
 function reset() {
     console.log('board reset');
-    plant = branch(INITIAL_ANGLE, INITIAL_HEIGHT, INITIAL_PROB);
+    plant = generatePlant();
 
     names = [];
     clients = [];
@@ -102,7 +146,7 @@ io.on('connection', function (socket) {
             }
         }
 
-        //growPlant(note.score);
+        ornaments.push(generateOrnament(note.content, note.name));
 
         io.emit('plant', JSON.stringify(plant));
     });
@@ -112,7 +156,7 @@ io.on('connection', function (socket) {
 
         console.log('received command: newPlant\nfrom ' + sender.name);
 
-        plant = branch(INITIAL_ANGLE, INITIAL_HEIGHT, INITIAL_PROB);
+        plant = generatePlant();
 
         io.emit('plant', JSON.stringify(plant));
     });

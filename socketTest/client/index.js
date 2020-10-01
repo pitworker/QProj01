@@ -54,34 +54,29 @@ function gotSpeech(speech) {
     }
 }
 
-function drawLeaf(r) {
-    noStroke();
-    fill(100,0,255);
-    circle(0, 0, r * 0.75);
-}
-
-function drawBranch(b) {
-    if (b != null) {
-        push();
-
-        rotate(b.angle + angleAdd);
-        strokeWeight(b.length / 2);
-        line(0, 0, 0, -b.length);
-        translate(0, -b.length);
-
-        if (b.isLeaf) {
-            drawLeaf(b.length);
-        } else {
-            drawBranch(b.left);
-            drawBranch(b.right);
-        }
-
-        pop();
-    }
-}
-
 function drawPlant() {
-    drawBranch(plant);
+    push();
+
+    translate(width / 2, height);
+
+    noStroke();
+
+    fill(plant.leafColor[0],
+         plant.leafColor[1],
+         plant.leafColor[2]);
+
+    triangle(plant.a[0], plant.a[1],
+             plant.b[0], plant.b[1],
+             plant.c[0], plant.c[1]);
+
+    fill(plant.stumpColor[0],
+         plant.stumpColor[1],
+         plant.stumpColor[2])
+
+    rectMode(CORNERS);
+    rect(-stump[0], 0, stump[0], stump[1]);
+
+    pop();
 }
 
 function plantFlow(t) {
@@ -119,10 +114,6 @@ function draw() {
                    * (Math.PI * 0.125);
 
         angleMult = (mouseX / width);
-
-        translate(width/2, height);
-
-        stroke(255);
 
         drawPlant();
 

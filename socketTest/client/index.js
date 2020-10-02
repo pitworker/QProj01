@@ -75,7 +75,7 @@ function drawPlant() {
              plant.stumpColor[2])
 
         rectMode(CORNERS);
-        rect(-stump[0], 0, stump[0], stump[1]);
+        rect(-plant.stump[0], 0, plant.stump[0], plant.stump[1]);
 
         pop()
     } else {

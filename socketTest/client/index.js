@@ -105,20 +105,25 @@ function drawMessage() {
     const r = 5;
     let x = mouseX - (width/2);
     let y = height - mouseY;
-
+    let hovering = false;
     for (let i = 0; i < ornaments.length; i++) {
         let o = ornaments[i];
         if (x > o.position[0] - r && x < o.position[0] + r
             && y > o.position[1] - r && y < o.position[1] + r) {
             displayedMessage = i;
+            hovering = true;
         }
+    }
+
+    if (!hovering) {
+        displayedMessage = -1;
     }
 
     push()
 
     translate(width / 2, height);
 
-    textSize(12);
+    textSize(24);
     textAlign(LEFT, TOP);
 
     if (displayedMessage > -1) {
@@ -131,11 +136,11 @@ function drawMessage() {
         stroke(255);
         fill(25,25,200);
         rectMode(CENTER);
-        rect(p[0], -p[1], w + 10, 44);
+        rect(p[0], -p[1], w + 10, 80);
 
         noStroke();
         fill(255);
-        text(n + ":\n" + m, p[0] - (w/2), -p[1] - 22);
+        text(n + ":\n" + m, p[0] - (w/2), -p[1] - 40);
     }
 
     pop();

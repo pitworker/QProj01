@@ -58,7 +58,7 @@ function drawPlant() {
     if (plant != null) {
         push();
 
-        translate(width / 2, height / 2);
+        translate(width / 2, height);
 
         noStroke();
 
@@ -66,16 +66,16 @@ function drawPlant() {
              plant.leafColor[1],
              plant.leafColor[2]);
 
-        triangle(plant.a[0], plant.a[1],
-                 plant.b[0], plant.b[1],
-                 plant.c[0], plant.c[1]);
+        triangle(plant.a[0], -plant.a[1],
+                 plant.b[0], -plant.b[1],
+                 plant.c[0], -plant.c[1]);
 
         fill(plant.stumpColor[0],
              plant.stumpColor[1],
              plant.stumpColor[2]);
 
         rectMode(CORNERS);
-        rect(-plant.stump[0], 0, plant.stump[0], plant.stump[1]);
+        rect(-plant.stump[0], 0, plant.stump[0], -plant.stump[1]);
 
         pop()
     } else {
@@ -109,7 +109,7 @@ function setup() {
 
 function draw() {
     if (signedIn) {
-        background(25,10,200);
+        background(255,85,100);
 
         let plantFlowVal = plantFlow((frameForward ? frameCount :
                                       (FRAME_LIMIT - frameCount))

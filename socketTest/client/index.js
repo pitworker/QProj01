@@ -58,7 +58,7 @@ function drawPlant() {
     if (plant != null) {
         push();
 
-        translate(width / 2, height);
+        translate(width / 2, height / 2);
 
         noStroke();
 
@@ -72,7 +72,7 @@ function drawPlant() {
 
         fill(plant.stumpColor[0],
              plant.stumpColor[1],
-             plant.stumpColor[2])
+             plant.stumpColor[2]);
 
         rectMode(CORNERS);
         rect(-plant.stump[0], 0, plant.stump[0], plant.stump[1]);
@@ -109,7 +109,7 @@ function setup() {
 
 function draw() {
     if (signedIn) {
-        background(255,204,0);
+        background(25,10,200);
 
         let plantFlowVal = plantFlow((frameForward ? frameCount :
                                       (FRAME_LIMIT - frameCount))

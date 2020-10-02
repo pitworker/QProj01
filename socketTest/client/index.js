@@ -136,11 +136,11 @@ function drawMessage() {
         stroke(255);
         fill(25,25,200);
         rectMode(CENTER);
-        rect(p[0], -p[1], w + 10, 80);
+        rect(p[0], -p[1], w + 40, 80);
 
         noStroke();
         fill(255);
-        text(n + ":\n" + m, p[0] - (w/2), -p[1] - 40);
+        text(n + ":\n" + m, p[0] - (w/2), -p[1]);
     }
 
     pop();

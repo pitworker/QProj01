@@ -17,7 +17,7 @@ let names = [];
 
 function generateEmoji() {
     let unicodeIndex = Math.floor(Math.random() * 0xFD) + 0x1F400;
-    return '\u' + unicodeIndex.toString(16);
+    return String.fromCharCode(unicodeIndex);
 }
 
 function placeOnBranch() {
@@ -80,11 +80,11 @@ function branch(a,h,p) {
 function generatePlant() {
     let bottomOffset = Math.random() * 150;
 
-    let newPlant {
+    let newPlant = {
         a: [0, Math.random() * 300 + 120],
         b: [-bottomOffset, 120],
         c: [bottomOffset, 120],
-        stump: [Math.random() * bottomOffset, 120]
+        stump: [Math.random() * bottomOffset, 120],
         leafColor: [0, 51, 0],
         stumpColor: [102, 51, 0]
     };

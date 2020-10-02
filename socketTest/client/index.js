@@ -55,28 +55,32 @@ function gotSpeech(speech) {
 }
 
 function drawPlant() {
-    push();
+    if (plant != null) {
+        push();
 
-    translate(width / 2, height);
+        translate(width / 2, height);
 
-    noStroke();
+        noStroke();
 
-    fill(plant.leafColor[0],
-         plant.leafColor[1],
-         plant.leafColor[2]);
+        fill(plant.leafColor[0],
+             plant.leafColor[1],
+             plant.leafColor[2]);
 
-    triangle(plant.a[0], plant.a[1],
-             plant.b[0], plant.b[1],
-             plant.c[0], plant.c[1]);
+        triangle(plant.a[0], plant.a[1],
+                 plant.b[0], plant.b[1],
+                 plant.c[0], plant.c[1]);
 
-    fill(plant.stumpColor[0],
-         plant.stumpColor[1],
-         plant.stumpColor[2])
+        fill(plant.stumpColor[0],
+             plant.stumpColor[1],
+             plant.stumpColor[2])
 
-    rectMode(CORNERS);
-    rect(-stump[0], 0, stump[0], stump[1]);
+        rectMode(CORNERS);
+        rect(-stump[0], 0, stump[0], stump[1]);
 
-    pop();
+        pop()
+    } else {
+        console.log('plant not yet received');
+    }
 }
 
 function plantFlow(t) {
@@ -87,6 +91,7 @@ function plantFlow(t) {
 function setup() {
     signedIn = false;
     warningIssued = false;
+    plant = null;
 
     let nameInput = document.createElement('INPUT');
     nameInput.setAttribute('type', 'text');

@@ -87,15 +87,25 @@ function drawPlant() {
 }
 
 function drawOrnaments() {
+    push();
+
+    translate(width / 2, height);
+
     for (let i = 0; i < ornaments.length; i++) {
         o = ornaments[i];
         textSize(48);
         textAlign(CENTER,CENTER);
-        text(o.symbol, o.position[0], o.position[1])
+        text(o.symbol, o.position[0], -o.position[1])
     }
+
+    pop();
 }
 
 function drawMessage() {
+    push()
+
+    translate(width / 2, height);
+
     textSize(12);
     textAlign(LEFT, TOP);
 
@@ -115,6 +125,8 @@ function drawMessage() {
         fill(255);
         text(n + ":\n" + m, p[0] - (w/2), -p[1] - 22);
     }
+
+    pop();
 }
 
 function plantFlow(t) {
@@ -172,8 +184,8 @@ function draw() {
 
 function mouseMoved() {
     const r = 5;
-    let x = mouseX;
-    let y = mouseY;
+    let x = mouseX - (width/2);
+    let y = height - mouseY;
 
     for (let i = 0; i < ornaments.length; i++) {
         let o = ornaments[i];
@@ -215,6 +227,12 @@ socket.on('plant', function (data) {
 socket.on('ornaments', function (data) {
     ornaments = JSON.parse(data);
     console.log('ornaments received');
+});
+
+socket.on('note', function (data) {
+    o = JSON.parse(data);
+    ornaments.push(o);
+    console.log('note received');
 });
 
 socket.on('disconnect', function () {

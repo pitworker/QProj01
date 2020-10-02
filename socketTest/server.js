@@ -142,6 +142,7 @@ io.on('connection', function (socket) {
 
     socket.on('note', function (noteJSON) {
         let note = JSON.parse(noteJSON);
+        let o = generateOrnament(note.content, note.name);
 
         console.log('received note: ' + note.content + '\nfrom ' + note.name);
 
@@ -151,9 +152,9 @@ io.on('connection', function (socket) {
             }
         }
 
-        ornaments.push(generateOrnament(note.content, note.name));
+        ornaments.push(o);
 
-        io.emit('plant', JSON.stringify(plant));
+        io.emit('note', JSON.stringify(o));
     });
 
     socket.on('newPlant', function (nameJSON) {

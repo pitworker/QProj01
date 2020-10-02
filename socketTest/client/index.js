@@ -140,7 +140,7 @@ function drawMessage() {
 
         noStroke();
         fill(255);
-        text(n + ":\n" + m, p[0] - (w/2), -p[1] - 20);
+        text(n + ":\n" + m, p[0] - (w/2), -p[1] - 30);
     }
 
     pop();

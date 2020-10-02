@@ -14,6 +14,9 @@ let warningIssued;
 let name;
 
 let plant;
+let ornaments;
+
+let displayedMessage;
 
 let angleMult;
 let angleAdd;
@@ -83,6 +86,37 @@ function drawPlant() {
     }
 }
 
+function drawOrnaments() {
+    for (let i = 0; i < ornaments.length; i++) {
+        o = ornaments[i];
+        textSize(48);
+        textAlign(CENTER,CENTER);
+        text(o.symbol, o.position[0], o.position[1])
+    }
+}
+
+function drawMessage() {
+    textSize(12);
+    textAlign(LEFT, TOP);
+
+    if (displayedMessage > -1) {
+        let m = ornaments[displayedMessage].message;
+        let n = ornaments[displayedMessage].sender;
+        let p = ornaments[displayedMessage].position;
+        let w = textWidth(m);
+
+        strokeWeight(4);
+        stroke(255);
+        fill(25,25,200);
+        rectMode(CENTER);
+        rect(p[0], p[1], w + 10, 44);
+
+        noStroke();
+        fill(255);
+        text(n + ":\n" + m, p[0] - (w/2), p[1] - 22);
+    }
+}
+
 function plantFlow(t) {
     // Using Penner's EaseOut Sine function from Golan Levin's Pattern Master
     return Math.sin(t * (Math.PI * 0.5));
@@ -92,6 +126,8 @@ function setup() {
     signedIn = false;
     warningIssued = false;
     plant = null;
+    ornaments = [];
+    displayedMessage = -1;
 
     let nameInput = document.createElement('INPUT');
     nameInput.setAttribute('type', 'text');
@@ -122,10 +158,28 @@ function draw() {
 
         drawPlant();
 
+        drawOrnaments();
+
+        drawMessage();
+
         frameCount++;
         if (frameCount >= FRAME_LIMIT) {
             frameCount = 0;
             frameForward = !frameForward;
+        }
+    }
+}
+
+function mouseMoved() {
+    const r = 5;
+    let x = mouseX;
+    let y = mouseY;
+
+    for (let i = 0; i < ornaments.length; i++) {
+        let o = ornaments[i];
+        if (x > o.position[0] - r && x < o.position[0] + r
+            && y > o.position[1] - r && y < o.position[1] + r) {
+            displayedMessage = i;
         }
     }
 }
@@ -156,6 +210,11 @@ socket.on('nameSet', function (data) {
 socket.on('plant', function (data) {
     plant = JSON.parse(data);
     console.log('new plant data received');
+});
+
+socket.on('ornaments', function (data) {
+    ornaments = JSON.parse(data);
+    console.log('ornaments received');
 });
 
 socket.on('disconnect', function () {

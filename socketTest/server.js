@@ -119,6 +119,7 @@ io.on('connection', function (socket) {
             socket.emit('nameSet', data);
             console.log(socket + ' set name to ' + data);
             socket.emit('plant', JSON.stringify(plant));
+            socket.emit('ornaments', JSON.stringify(ornaments));
             io.emit('newClient', data);
         }
     });

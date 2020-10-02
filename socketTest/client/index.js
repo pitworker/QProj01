@@ -102,6 +102,18 @@ function drawOrnaments() {
 }
 
 function drawMessage() {
+    const r = 5;
+    let x = mouseX - (width/2);
+    let y = height - mouseY;
+
+    for (let i = 0; i < ornaments.length; i++) {
+        let o = ornaments[i];
+        if (x > o.position[0] - r && x < o.position[0] + r
+            && y > o.position[1] - r && y < o.position[1] + r) {
+            displayedMessage = i;
+        }
+    }
+
     push()
 
     translate(width / 2, height);
@@ -182,20 +194,6 @@ function draw() {
     }
 }
 
-function mouseMoved() {
-    const r = 5;
-    let x = mouseX - (width/2);
-    let y = height - mouseY;
-
-    for (let i = 0; i < ornaments.length; i++) {
-        let o = ornaments[i];
-        if (x > o.position[0] - r && x < o.position[0] + r
-            && y > o.position[1] - r && y < o.position[1] + r) {
-            displayedMessage = i;
-        }
-    }
-}
-
 socket.on('nameExists', function (data) {
     if (!warningIssued) {
         let warningText = document.createElement('DIV');
@@ -229,8 +227,8 @@ socket.on('ornaments', function (data) {
     console.log('ornaments received');
 });
 
-socket.on('note', function (data) {
-    o = JSON.parse(data);
+socket.on('newOrnament', function (data) {
+    let o = JSON.parse(data);
     ornaments.push(o);
     console.log('note received');
 });

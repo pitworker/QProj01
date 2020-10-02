@@ -154,7 +154,7 @@ io.on('connection', function (socket) {
 
         ornaments.push(o);
 
-        io.emit('note', JSON.stringify(o));
+        io.emit('newOrnament', JSON.stringify(o));
     });
 
     socket.on('newPlant', function (nameJSON) {

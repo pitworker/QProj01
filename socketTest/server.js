@@ -104,6 +104,10 @@ app.get('/', function (req,res) {
     res.sendFile(__dirname + '/client/index.html');
 });
 
+app.get('/messenger', function (req,res) {
+    res.sendFile(__dirname + '/client/messenger.html');
+});
+
 io.on('connection', function (socket) {
     console.log('new client connected: ' + socket);
 

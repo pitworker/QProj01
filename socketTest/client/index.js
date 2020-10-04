@@ -152,7 +152,7 @@ function draw() {
 
         noStroke();
         fill(255);
-        rect(0, height, width, height - 250);
+        rect(0, height - 250, width, 250);
 
         drawPlant();
 

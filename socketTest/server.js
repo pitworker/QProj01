@@ -55,7 +55,7 @@ function generatePlant() {
     let bottomOffset = Math.random() * 150;
 
     let newPlant = {
-        img: 'https://pitworker.github.io/QProj01/socketTest/src/tree1.png',
+        img: 'https://pitworker.github.io/QProj01/src/tree1.png',
         a: [-72, -788],
         b: [-300, -108],
         c: [300, -108]

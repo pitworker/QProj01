@@ -93,7 +93,7 @@ function drawOrnaments() {
 function drawMessage() {
     const r = 5;
     let x = mouseX - (width/2);
-    let y = height - mouseY;
+    let y = mouseY;
     let hovering = false;
     for (let i = 0; i < ornaments.length; i++) {
         let o = ornaments[i];

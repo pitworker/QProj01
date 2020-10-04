@@ -5,9 +5,13 @@ const PLANT_BASE = 200;
 
 const FRAME_LIMIT = 300;
 
+const MESSAGE_POS = [75,75];
+const COUNTER_POS = [75,75];
+
 let socket = io();
 
 let speechRec;
+let sendingMessage;
 
 let signedIn;
 let warningIssued;
@@ -47,13 +51,13 @@ function gotSpeech(speech) {
 
     console.log('captured speech: ' + phrase);
 
-    //TODO: distinguish different phrases by key commands
-    //SEND NOTE, WATER PLANT, LIGHT ON, LIGHT OFF
-
-    if (phrase.toLowerCase() == 'new plant') {
-        socket.emit('newPlant', JSON.stringify({'name': name}));
-    } else {
+    if (phrase.toLowerCase() == 'send message') {
+        sendingMessage = true;
+    } else if (sendingMessage) {
         socket.emit('note', JSON.stringify({'name': name, 'content': phrase}));
+        sendingMessage = false;
+    } else {
+        console.log('Speech detected, not recording');
     }
 }
 
@@ -63,22 +67,7 @@ function drawPlant() {
 
         translate(width / 2, height);
 
-        noStroke();
-
-        fill(plant.leafColor[0],
-             plant.leafColor[1],
-             plant.leafColor[2]);
-
-        triangle(plant.a[0], -plant.a[1],
-                 plant.b[0], -plant.b[1],
-                 plant.c[0], -plant.c[1]);
-
-        fill(plant.stumpColor[0],
-             plant.stumpColor[1],
-             plant.stumpColor[2]);
-
-        rectMode(CORNERS);
-        rect(-plant.stump[0], 0, plant.stump[0], -plant.stump[1]);
+        image(plant.img, -300, -788, 600, 788);
 
         pop()
     } else {
@@ -95,7 +84,7 @@ function drawOrnaments() {
         o = ornaments[i];
         textSize(48);
         textAlign(CENTER,CENTER);
-        text(o.symbol, o.position[0], -o.position[1])
+        text(o.symbol, o.position[0], o.position[1])
     }
 
     pop();
@@ -119,11 +108,8 @@ function drawMessage() {
         displayedMessage = -1;
     }
 
-    push()
-
-    translate(width / 2, height);
-
-    textSize(24);
+    textFont('Poppins');
+    textSize(36);
     textAlign(LEFT, TOP);
 
     if (displayedMessage > -1) {
@@ -132,24 +118,12 @@ function drawMessage() {
         let p = ornaments[displayedMessage].position;
         let w = textWidth(m);
 
-        strokeWeight(4);
-        stroke(255);
-        fill(25,25,200);
-        rectMode(CENTER);
-        rect(p[0], -p[1], w + 40, 80);
-
         noStroke();
-        fill(255);
-        text(n + ":\n" + m, p[0] - (w/2), -p[1] - 25);
+        fill(119, 0, 17);
+        text(n + ":\n" + m, MESSAGE_POS[0], MESSAGE_POS[1]);
     }
-
-    pop();
 }
 
-function plantFlow(t) {
-    // Using Penner's EaseOut Sine function from Golan Levin's Pattern Master
-    return Math.sin(t * (Math.PI * 0.5));
-}
 
 function setup() {
     signedIn = false;
@@ -174,16 +148,11 @@ function setup() {
 
 function draw() {
     if (signedIn) {
-        background(255,85,100);
+        background(111,217,227);
 
-        let plantFlowVal = plantFlow((frameForward ? frameCount :
-                                      (FRAME_LIMIT - frameCount))
-                                     / FRAME_LIMIT);
-
-        angleAdd = (2.0 * (plantFlowVal - 0.5))
-                   * (Math.PI * 0.125);
-
-        angleMult = (mouseX / width);
+        noStroke();
+        fill(255);
+        rect(0, height, width, height - 250);
 
         drawPlant();
 
@@ -224,6 +193,7 @@ socket.on('nameSet', function (data) {
 
 socket.on('plant', function (data) {
     plant = JSON.parse(data);
+    plant.img = loadImage(plant.img);
     console.log('new plant data received');
 });
 

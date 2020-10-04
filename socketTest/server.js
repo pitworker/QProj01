@@ -51,42 +51,14 @@ function generateOrnament(message,sender) {
     return ornament;
 }
 
-function branch(a,h,p) {
-    let n = {
-        angle:  a,
-        length: h,
-        right:  null,
-        left:   null,
-        isLeaf: true
-    };
-
-    if (Math.random() < p) {
-        n.right = branch(a + THETA,
-                         h * HEIGHT_MULT,
-                         p * PROB_MULT);
-        n.isLeaf = false;
-    }
-
-    if (Math.random() < p) {
-        n.left = branch(a - THETA,
-                        h * HEIGHT_MULT,
-                        p * PROB_MULT);
-        n.isLeaf = false;
-    }
-
-    return n;
-}
-
 function generatePlant() {
     let bottomOffset = Math.random() * 150;
 
     let newPlant = {
-        a: [0, Math.random() * 300 + 120],
-        b: [-bottomOffset, 120],
-        c: [bottomOffset, 120],
-        stump: [Math.random() * bottomOffset, 120],
-        leafColor: [0, 51, 0],
-        stumpColor: [102, 51, 0]
+        img: 'https://pitworker.github.io/QProj01/socketTest/src/tree1.png',
+        a: [-72, -788],
+        b: [-300, -108],
+        c: [300, -108]
     };
 
     return newPlant;
@@ -169,6 +141,6 @@ io.on('connection', function (socket) {
 });
 
 reset();
-http.listen(PORT, function () {
+http.listen(PORT, '10.0.0.198', function () {
    console.log('Listening on localhost:' + PORT + '...');
 });

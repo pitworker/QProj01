@@ -95,19 +95,21 @@ function drawMessage() {
     let x = mouseX - (width/2);
     let y = mouseY;
     let hovering = false;
+
     for (let i = 0; i < ornaments.length; i++) {
         let o = ornaments[i];
         if (x > o.position[0] - r && x < o.position[0] + r
             && y > o.position[1] - r && y < o.position[1] + r) {
             displayedMessage = i;
             hovering = true;
-            console.log('hovering');
         }
     }
 
     if (!hovering) {
         displayedMessage = -1;
     }
+
+    console.log('mouse x: ' + x + ' y: ' + y + ' hovering: ' + hovering);
 
     //textFont('Poppins');
     textSize(36);

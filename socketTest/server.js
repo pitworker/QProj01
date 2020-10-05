@@ -52,10 +52,10 @@ function generateOrnament(message,sender) {
 }
 
 function generatePlant() {
-    let bottomOffset = Math.random() * 150;
+    let treeNum = Math.floor(Math.random() * 8) + 1;
 
     let newPlant = {
-        img: 'https://pitworker.github.io/QProj01/src/tree1.png',
+        img: 'https://pitworker.github.io/QProj01/src/tree_' + treeNum + '.png',
         a: [-72, -788],
         b: [-300, -108],
         c: [300, -108]

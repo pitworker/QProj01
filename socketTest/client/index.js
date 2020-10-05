@@ -105,7 +105,10 @@ function drawOrnaments() {
         /*if (displayedMessage == i) {
             image(o.dyn, o.position[0], o.position[1], ORNAMENT_R, ORNAMENT_R);
         } else {*/
-            image(o.stat, o.position[0], o.position[1], ORNAMENT_R, ORNAMENT_R);
+        image(o.stat,
+              o.position[0] - (ORNAMENT_R / 2),
+              o.position[1] - (ORNAMENT_R / 2),
+              ORNAMENT_R, ORNAMENT_R);
         //}
     }
 

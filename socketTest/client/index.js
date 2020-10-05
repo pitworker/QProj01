@@ -16,7 +16,7 @@ const MAX_FLAKE_SIZE = 7;
 
 const SNOW_COLOR = [255,255,255];
 const SKY_COLOR = [169,207,219];
-const MESSAGE_COLOR = [232,129,121];
+const MESSAGE_COLOR = {MAJOR: [232,129,121], MINOR: [130, 73, 62]};
 const COUNTER_COLOR = {MAJOR: [68,101,55], MINOR: [31,45,25]};
 
 const TYPEFACE = 'Quicksand';
@@ -126,8 +126,8 @@ function drawMessage() {
         displayedMessage = -1;
     }
 
+    noStroke();
     textFont(TYPEFACE);
-    textSize(36);
     textAlign(LEFT, TOP);
 
     if (displayedMessage > -1) {
@@ -136,9 +136,18 @@ function drawMessage() {
         let p = ornaments[displayedMessage].position;
         let w = textWidth(m);
 
-        noStroke();
-        fill(MESSAGE_COLOR[0], MESSAGE_COLOR[1], MESSAGE_COLOR[2]);
-        text(n + ":\n" + m, MESSAGE_POS[0], MESSAGE_POS[1]);
+        textSize(48);
+        fill(MESSAGE_COLOR.MAJOR[0],
+             MESSAGE_COLOR.MAJOR[1],
+             MESSAGE_COLOR.MAJOR[2]);
+        text(n + ':', MESSAGE_POS[0], MESSAGE_POS[1]);
+
+        textSize(18);
+        fill(MESSAGE_COLOR.MINOR[0],
+             MESSAGE_COLOR.MINOR[1],
+             MESSAGE_COLOR.MINOR[2]);
+        text(m, MESSAGE_POS[0], MESSAGE_POS[1] + 45);
+
     }
 }
 
@@ -187,8 +196,8 @@ function drawTime() {
     fill(COUNTER_COLOR.MINOR[0],
          COUNTER_COLOR.MINOR[1],
          COUNTER_COLOR.MINOR[2]);
-    text('months &', width - COUNTER_POS[0], COUNTER_POS[1] + 35);
-    text('days until\nnew years', width - COUNTER_POS[0], COUNTER_POS[1] + 110);
+    text('months &', width - COUNTER_POS[0], COUNTER_POS[1] + 45);
+    text('days until\nnew years', width - COUNTER_POS[0], COUNTER_POS[1] + 120);
 }
 
 function setup() {

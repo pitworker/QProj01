@@ -5,8 +5,8 @@ const PLANT_BASE = 200;
 
 const FRAME_LIMIT = 300;
 
-const MESSAGE_POS = [75,75];
-const COUNTER_POS = [75,75];
+const MESSAGE_POS = [75,150];
+const COUNTER_POS = [75,150];
 
 const MOUSE_RADIUS = 15;
 
@@ -174,19 +174,21 @@ function drawTime() {
     let d = 31 - day();
     let m = 12 - month();
 
+    textAlign(RIGHT, TOP);
+
     textSize(48);
     fill(COUNTER_COLOR.MAJOR[0],
          COUNTER_COLOR.MAJOR[1],
          COUNTER_COLOR.MAJOR[2]);
-    text(m, width - 200, 150);
-    text(d, width - 200, 225);
+    text(m, width - COUNTER_POS[0], COUNTER_POS[1]);
+    text(d, width - COUNTER_POS[0], COUNTER_POS[1] + 75);
 
     textSize(18);
     fill(COUNTER_COLOR.MINOR[0],
          COUNTER_COLOR.MINOR[1],
          COUNTER_COLOR.MINOR[2]);
-    text('months &', width - 200, 175);
-    text('days until\nnew years', width - 200, 250);
+    text('months &', width - COUNTER_POS[0], COUNTER_POS[1] + 35);
+    text('days until\nnew years', width - COUNTER_POS[0], COUNTER_POS[1] + 110);
 }
 
 function setup() {

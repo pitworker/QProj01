@@ -17,7 +17,7 @@ const MAX_FLAKE_SIZE = 7;
 const SNOW_COLOR = [255,255,255];
 const SKY_COLOR = [169,207,219];
 const MESSAGE_COLOR = [232,129,121];
-const COUNTER_COLOR = {MAJOR: [68,101,55], MINOR: [199,224,234]};
+const COUNTER_COLOR = {MAJOR: [68,101,55], MINOR: [31,45,25]};
 
 const TYPEFACE = 'Quicksand';
 
@@ -142,6 +142,8 @@ function drawMessage() {
 
 function drawSnow() {
     // Adapted from http://solemone.de/demos/snow-effect-processing/
+    fill(SNOW_COLOR[0], SNOW_COLOR[1], SNOW_COLOR[2]);
+
     for (let i = 0; i < flakes.length; i++) {
         let add = map(flakes[i].size,
                       MIN_FLAKE_SIZE, MAX_FLAKE_SIZE,

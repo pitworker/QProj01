@@ -120,7 +120,7 @@ function drawMessage() {
 
         noStroke();
         fill(119, 0, 17);
-        text(n + ":\n" + m, MESSAGE_POS[0], MESSAGE_POS[1]);
+        text(n + ":\n" + m, 0,0);//MESSAGE_POS[0], MESSAGE_POS[1]);
     }
 }
 

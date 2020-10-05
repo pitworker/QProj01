@@ -175,7 +175,7 @@ function drawTime() {
          COUNTER_COLOR.MAJOR[1],
          COUNTER_COLOR.MAJOR[2]);
     text(m, width - 200, 150);
-    text(days, width - 200, 225);
+    text(d, width - 200, 225);
 
     textSize(18);
     fill(COUNTER_COLOR.MINOR[0],

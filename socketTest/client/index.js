@@ -298,7 +298,7 @@ socket.on('ornaments', function (data) {
 
     for (let i = 0; i < ornaments.length; i++) {
         ornaments[i].stat = loadImage(ornaments[i].stat);
-        ornaments[i].dyn = loadImage(ornaments[i].dyn);
+        //ornaments[i].dyn = loadImage(ornaments[i].dyn);
     }
 
     console.log('ornaments received');

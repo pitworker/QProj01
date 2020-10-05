@@ -1,33 +1,41 @@
-canvas {
-    padding: 0;
-    margin: auto;
+html{
     display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    padding: 5em;
+    font-family:Quicksand, Arial, sans-serif;
+    background: #c7e0ea;
+
 }
 
-body {
-  padding-left: 100px;
-   // background: #c7e0ea;
+body{
+  padding: 10em;
 }
 
+h1{
+    text-align: left;
+    font-style: normal;
+    font-size: 20px;
+    color: #1f2d19;
 
-#enterButton {
-    background-color: #c7e0ea;
+}
+
+button#enterButton {
+    background-color: #8ec2ce;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 12px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+    border-radius: 5px;
 }
 
-#nameInput {
-    width: 33%;
+input#nameInput {
+    width: 75%;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: #8ec2ce;
+
 
 }
 

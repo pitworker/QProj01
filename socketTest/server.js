@@ -6,6 +6,12 @@ const INITIAL_HEIGHT = 120;
 const INITIAL_ANGLE = 0;
 const INITIAL_PROB = 1;
 
+const IMAGE_HEIGHT = 3889;
+const IMAGE_WIDTH = 2736;
+const SCALED_HEIGHT = 400;
+const SCALED_WIDTH = IMAGE_WIDTH / IMAGE_HEIGHT * SCALED_HEIGHT;
+const TREE_A = [];
+
 let app = require('express')();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);

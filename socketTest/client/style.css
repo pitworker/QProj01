@@ -1,16 +1,11 @@
 html{
+    margin: 0;
+    padding: 0;
+}
+
+canvas {
     display: block;
-
-    font-family:Quicksand, Arial, sans-serif;
-    background: #c7e0ea;
-
 }
-
-/*
-body{
-  padding: 10em;
-}
-*/
 
 h1{
     text-align: left;
@@ -20,7 +15,12 @@ h1{
 
 }
 
-div{
+div#signIn{
+    display: block;
+
+    font-family:Quicksand, Arial, sans-serif;
+    background: #c7e0ea;
+
     padding: 12em;
 }
 

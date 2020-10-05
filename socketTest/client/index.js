@@ -124,8 +124,6 @@ function drawMessage() {
         displayedMessage = -1;
     }
 
-    console.log('mouse x: ' + x + ' y: ' + y + ' hovering: ' + hovering);
-
     textFont(TYPEFACE);
     textSize(36);
     textAlign(LEFT, TOP);

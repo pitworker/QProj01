@@ -27,8 +27,10 @@ let clients = [];
 let names = [];
 
 function generateEmoji() {
-    let unicodeIndex = Math.floor(Math.random() * 0xFD) + 0x1F400;
-    return String.fromCharCode(unicodeIndex);
+    let ornNum = Math.floor(Math.random() * 9) + 1;
+    let png = 'https://pitworker.github.io/QProj01/src/orn' + ornNum + '.png'
+    let gif = 'https://pitworker.github.io/QProj01/src/orn' + ornNum + '.gif'
+    return {png: png, gif: gif};
 }
 
 function placeOnBranch() {
@@ -49,15 +51,15 @@ function placeOnBranch() {
 
 function generateOrnament(message,sender) {
     let ornament = {};
-
-    ornament.symbol = generateEmoji();
+    let images = generateEmoji();
+    ornament.stat = images.png;
+    ornament.dyn = images.gif;
     ornament.position = placeOnBranch();
     ornament.message = message;
     ornament.sender = sender;
 
     console.log(sender + '\'s message: ' + ornament.message
-                + '\nencoded placed at: ' + ornament.position
-                + '\nwith emoji: ' + ornament.symbol);
+                + '\nencoded placed at: ' + ornament.position);
 
     return ornament;
 }

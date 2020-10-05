@@ -8,7 +8,9 @@ const FRAME_LIMIT = 300;
 const MESSAGE_POS = [75,150];
 const COUNTER_POS = [75,150];
 
-const MOUSE_RADIUS = 15;
+const ORNAMENT_R = 48;
+
+const MOUSE_RADIUS = 20;
 
 const FLAKE_QUANT = 15;
 const MIN_FLAKE_SIZE = 4;
@@ -99,9 +101,12 @@ function drawOrnaments() {
 
     for (let i = 0; i < ornaments.length; i++) {
         o = ornaments[i];
-        textSize(48);
-        textAlign(CENTER,CENTER);
-        text(o.symbol, o.position[0], o.position[1])
+
+        if (displayedMessage == i) {
+            image(o.dyn, o.position[0], o.position[1], ORNAMENT_R, ORNAMENT_R);
+        } else {
+            image(o.stat, o.position[0], o.position[1], ORNAMENT_R, ORNAMENT_R);
+        }
     }
 
     pop();
@@ -290,12 +295,23 @@ socket.on('plant', function (data) {
 
 socket.on('ornaments', function (data) {
     ornaments = JSON.parse(data);
+
+    for (let i = 0; i < ornaments.length; i++) {
+        ornaments[i].stat = loadImage(ornaments[i].stat);
+        ornaments[i].dyn = loadImage(ornaments[i].dyn);
+    }
+
     console.log('ornaments received');
 });
 
 socket.on('newOrnament', function (data) {
     let o = JSON.parse(data);
+
+    o.stat = loadImage(o.stat);
+    o.dyn = loadImage(o.dyn);
+
     ornaments.push(o);
+
     console.log('note received');
 });
 

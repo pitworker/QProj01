@@ -219,6 +219,9 @@ function setup() {
         });
     }
 
+    let signIn = document.createElement('DIV');
+    signIn.setAttribute('id', 'signIn');
+
     let nameInput = document.createElement('INPUT');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('id', 'nameInput');
@@ -229,8 +232,9 @@ function setup() {
     enterButton.setAttribute('onclick', 'setName()');
     enterButton.appendChild(document.createTextNode('ENTER'));
 
-    document.body.appendChild(nameInput);
-    document.body.appendChild(enterButton);
+    signIn.appendChild(nameInput);
+    signIn.appendChild(enterButton);
+    document.body.appendChild(signIn);
 }
 
 function draw() {
@@ -261,7 +265,7 @@ socket.on('nameExists', function (data) {
         warningText.appendChild(document.createTextNode(
             'This name is already taken, please choose another one.'));
 
-        document.body.appendChild(warningText);
+        document.getElementById('signIn').appendChild(warningText);
         warningIssued = true;
     }
 });
@@ -271,6 +275,7 @@ socket.on('nameSet', function (data) {
 
     document.getElementById('nameInput').remove();
     document.getElementById('enterButton').remove();
+    document.getElementById('signIn').remove();
     if (warningIssued) {
         document.getElementById('warningText').remove();
     }

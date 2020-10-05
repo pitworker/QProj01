@@ -29,8 +29,8 @@ let names = [];
 function generateEmoji() {
     let ornNum = Math.floor(Math.random() * 9) + 1;
     let png = 'https://pitworker.github.io/QProj01/src/orn' + ornNum + '.png'
-    let gif = 'https://pitworker.github.io/QProj01/src/orn' + ornNum + '.gif'
-    return {png: png, gif: gif};
+    //let gif = 'https://pitworker.github.io/QProj01/src/orn' + ornNum + '.gif'
+    return {png: png/*, gif: gif*/};
 }
 
 function placeOnBranch() {
@@ -53,7 +53,7 @@ function generateOrnament(message,sender) {
     let ornament = {};
     let images = generateEmoji();
     ornament.stat = images.png;
-    ornament.dyn = images.gif;
+    //ornament.dyn = images.gif;
     ornament.position = placeOnBranch();
     ornament.message = message;
     ornament.sender = sender;

@@ -8,7 +8,7 @@ const FRAME_LIMIT = 300;
 const MESSAGE_POS = [75,150];
 const COUNTER_POS = [75,150];
 
-const ORNAMENT_R = 48;
+const ORNAMENT_R = 96;
 
 const MOUSE_RADIUS = 20;
 
@@ -102,11 +102,11 @@ function drawOrnaments() {
     for (let i = 0; i < ornaments.length; i++) {
         o = ornaments[i];
 
-        if (displayedMessage == i) {
+        /*if (displayedMessage == i) {
             image(o.dyn, o.position[0], o.position[1], ORNAMENT_R, ORNAMENT_R);
-        } else {
+        } else {*/
             image(o.stat, o.position[0], o.position[1], ORNAMENT_R, ORNAMENT_R);
-        }
+        //}
     }
 
     pop();

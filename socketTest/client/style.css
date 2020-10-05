@@ -1,6 +1,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    background: #c7e0ea;
 }
 
 canvas {
@@ -26,13 +27,13 @@ div#signIn{
 
 button#enterButton {
     background-color: #8ec2ce;
-  border: none;
-  color: white;
-  padding: 12px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+    border: none;
+    color: white;
+    padding: 12px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
     border-radius: 5px;
 }
 
@@ -41,13 +42,11 @@ input#nameInput {
     border-style: solid;
     border-radius: 5px;
     border-color: #8ec2ce;
-
-
 }
 
 input[type=text] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
 }

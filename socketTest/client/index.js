@@ -82,7 +82,9 @@ function drawPlant() {
 
         translate(width / 2, height);
 
-        image(plant.img, -300, -788, 600, 788);
+        image(plant.img,
+              -(plant.width / 2), -plant.height,
+              plant.width, plant.height);
 
         pop()
     } else {

@@ -8,9 +8,14 @@ const INITIAL_PROB = 1;
 
 const IMAGE_HEIGHT = 3889;
 const IMAGE_WIDTH = 2736;
-const SCALED_HEIGHT = 400;
+const SCALED_HEIGHT = 600;
 const SCALED_WIDTH = IMAGE_WIDTH / IMAGE_HEIGHT * SCALED_HEIGHT;
-const TREE_A = [];
+const TREE_A = [-(IMAGE_WIDTH / 2 - 1272) * (SCALED_WIDTH / IMAGE_WIDTH),
+                -SCALED_HEIGHT];
+const TREE_B = [-(SCALED_WIDTH / 2),
+                -(IMAGE_HEIGHT - 3288) * (SCALED_HEIGHT / IMAGE_HEIGHT)];
+const TREE_C = [SCALED_WIDTH / 2,
+                -(IMAGE_HEIGHT - 3354) * (SCALED_HEIGHT / IMAGE_HEIGHT)];
 
 let app = require('express')();
 let http = require('http').Server(app);
@@ -62,9 +67,11 @@ function generatePlant() {
 
     let newPlant = {
         img: 'https://pitworker.github.io/QProj01/src/tree_' + treeNum + '.png',
-        a: [-72, -788],
-        b: [-300, -108],
-        c: [300, -108]
+        height: SCALED_HEIGHT,
+        width: SCALED_WIDTH,
+        a: TREE_A,
+        b: TREE_B,
+        c: TREE_C
     };
 
     return newPlant;

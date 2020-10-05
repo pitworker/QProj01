@@ -91,7 +91,7 @@ function drawOrnaments() {
 }
 
 function drawMessage() {
-    const r = 5;
+    const r = 10;
     let x = mouseX - (width/2);
     let y = - (height - mouseY);
     let hovering = false;

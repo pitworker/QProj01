@@ -308,7 +308,7 @@ socket.on('newOrnament', function (data) {
     let o = JSON.parse(data);
 
     o.stat = loadImage(o.stat);
-    o.dyn = loadImage(o.dyn);
+    //o.dyn = loadImage(o.dyn);
 
     ornaments.push(o);
 

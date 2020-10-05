@@ -101,6 +101,7 @@ function drawMessage() {
             && y > o.position[1] - r && y < o.position[1] + r) {
             displayedMessage = i;
             hovering = true;
+            console.log('hovering');
         }
     }
 

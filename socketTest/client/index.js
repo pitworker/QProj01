@@ -15,9 +15,9 @@ const MIN_FLAKE_SIZE = 4;
 const MAX_FLAKE_SIZE = 7;
 
 const SNOW_COLOR = [255,255,255];
-const SKY_COLOR = [111,217,227];
-const MESSAGE_COLOR = [119,0,17];
-const COUNTER_COLOR = [119,0,17];
+const SKY_COLOR = [169,207,219];
+const MESSAGE_COLOR = [232,129,121];
+const COUNTER_COLOR = {MAJOR: [68,101,55], MINOR: [199,224,234]};
 
 const TYPEFACE = 'Quicksand';
 
@@ -40,6 +40,8 @@ let angleAdd;
 
 let frameCount;
 let frameForward;
+
+let flakes;
 
 function initializePlant() {
     createCanvas(windowWidth, windowHeight);
@@ -140,6 +142,50 @@ function drawMessage() {
     }
 }
 
+function drawSnow() {
+    // Adapted from http://solemone.de/demos/snow-effect-processing/
+    for (let i = 0; i < flakes.length; i++) {
+        let add = map(flakes[i].size,
+                      MIN_FLAKE_SIZE, MAX_FLAKE_SIZE,
+                      0.1, 0.5);
+
+        circle(flakes[i].pos[0], flakes[i].pos[1], flakes[i].size);
+
+        if (flakes[i].dir == 0) {
+            flakes[i].pos[0] += add;
+        } else {
+            flakes[i].pos[0] -= add;
+        }
+
+        flakes[i].pos[1] += flakes[i].size + flakes[i].dir;
+
+        if (flakes[i].pos[0] > width + flakes[i].size
+            || flakes[i].pos[0] < - flakes[i].size
+            || flakes[i].pos[1] > height + flakes[i].size) {
+            flakes[i].pos[0] = Math.random() * width;
+            flakes[i].pos[1] = - flakes[i].size;
+        }
+    }
+}
+
+function drawTime() {
+    let d = 31 - day();
+    let m = 12 - month();
+
+    textSize(48);
+    fill(COUNTER_COLOR.MAJOR[0],
+         COUNTER_COLOR.MAJOR[1],
+         COUNTER_COLOR.MAJOR[2]);
+    text(m, width - 200, 150);
+    text(days, width - 200, 225);
+
+    textSize(18);
+    fill(COUNTER_COLOR.MINOR[0],
+         COUNTER_COLOR.MINOR[1],
+         COUNTER_COLOR.MINOR[2]);
+    text('months &', width - 200, 175);
+    text('days until\nnew years', width - 200, 250);
+}
 
 function setup() {
     signedIn = false;
@@ -147,6 +193,18 @@ function setup() {
     plant = null;
     ornaments = [];
     displayedMessage = -1;
+    flakes = [];
+
+    for (let i = 0; i < FLAKE_QUANT; i++) {
+        flakes.push({
+            size: Math.round(Math.random()
+                             * (MAX_FLAKE_SIZE - MIN_FLAKE_SIZE)
+                             + MIN_FLAKE_SIZE),
+            pos: [Math.random() * width,
+                  Math.random() * height],
+            dir: Math.round(Math.random())
+        });
+    }
 
     let nameInput = document.createElement('INPUT');
     nameInput.setAttribute('type', 'text');
@@ -164,6 +222,7 @@ function setup() {
 
 function draw() {
     if (signedIn) {
+
         background(SKY_COLOR[0], SKY_COLOR[1], SKY_COLOR[2]);
 
         noStroke();
@@ -174,13 +233,11 @@ function draw() {
 
         drawOrnaments();
 
+        drawTime();
+
         drawMessage();
 
-        frameCount++;
-        if (frameCount >= FRAME_LIMIT) {
-            frameCount = 0;
-            frameForward = !frameForward;
-        }
+        drawSnow();
     }
 }
 

@@ -8,6 +8,19 @@ const FRAME_LIMIT = 300;
 const MESSAGE_POS = [75,75];
 const COUNTER_POS = [75,75];
 
+const MOUSE_RADIUS = 15;
+
+const FLAKE_QUANT = 15;
+const MIN_FLAKE_SIZE = 4;
+const MAX_FLAKE_SIZE = 7;
+
+const SNOW_COLOR = [255,255,255];
+const SKY_COLOR = [111,217,227];
+const MESSAGE_COLOR = [119,0,17];
+const COUNTER_COLOR = [119,0,17];
+
+const TYPEFACE = 'Quicksand';
+
 let socket = io();
 
 let speechRec;
@@ -91,7 +104,7 @@ function drawOrnaments() {
 }
 
 function drawMessage() {
-    const r = 10;
+    const r = MOUSE_RADIUS;
     let x = mouseX - (width/2);
     let y = - (height - mouseY);
     let hovering = false;
@@ -111,7 +124,7 @@ function drawMessage() {
 
     console.log('mouse x: ' + x + ' y: ' + y + ' hovering: ' + hovering);
 
-    textFont('Lato');
+    textFont(TYPEFACE);
     textSize(36);
     textAlign(LEFT, TOP);
 
@@ -122,7 +135,7 @@ function drawMessage() {
         let w = textWidth(m);
 
         noStroke();
-        fill(119, 0, 17);
+        fill(MESSAGE_COLOR[0], MESSAGE_COLOR[1], MESSAGE_COLOR[2]);
         text(n + ":\n" + m, MESSAGE_POS[0], MESSAGE_POS[1]);
     }
 }
@@ -151,10 +164,10 @@ function setup() {
 
 function draw() {
     if (signedIn) {
-        background(111,217,227);
+        background(SKY_COLOR[0], SKY_COLOR[1], SKY_COLOR[2]);
 
         noStroke();
-        fill(255);
+        fill(SNOW_COLOR[0], SNOW_COLOR[1], SNOW_COLOR[2]);
         rect(0, height - 250, width, 250);
 
         drawPlant();

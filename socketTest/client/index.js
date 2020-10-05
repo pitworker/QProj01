@@ -108,7 +108,7 @@ function drawMessage() {
         displayedMessage = -1;
     }
 
-    textFont('Poppins');
+    //textFont('Poppins');
     textSize(36);
     textAlign(LEFT, TOP);
 
